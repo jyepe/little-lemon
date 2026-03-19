@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 
 function Header() {
     const location = useLocation();
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const navLinks = [
         { label: "Home", path: "/" },
@@ -23,8 +25,24 @@ function Header() {
                         className="header__logo"
                     />
                 </Link>
+                <button
+                    className={`header__hamburger${menuOpen ? " header__hamburger--open" : ""}`}
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+                    aria-expanded={menuOpen}
+                    aria-controls="main-nav"
+                    id="hamburger-btn"
+                >
+                    <span className="header__hamburger-bar" />
+                    <span className="header__hamburger-bar" />
+                    <span className="header__hamburger-bar" />
+                </button>
                 <nav aria-label="Main navigation">
-                    <ul className="header__nav" role="menubar">
+                    <ul
+                        className={`header__nav${menuOpen ? " header__nav--open" : ""}`}
+                        role="menubar"
+                        id="main-nav"
+                    >
                         {navLinks.map((link) => (
                             <li key={link.path} role="none">
                                 <Link
@@ -40,6 +58,7 @@ function Header() {
                                             ? "page"
                                             : undefined
                                     }
+                                    onClick={() => setMenuOpen(false)}
                                 >
                                     {link.label}
                                 </Link>
@@ -53,3 +72,4 @@ function Header() {
 }
 
 export default Header;
+
