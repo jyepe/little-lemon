@@ -2,16 +2,9 @@ import { useMemo } from "react";
 import "./ReserveTable.css";
 import FormField from "./FormField";
 
-const AVAILABLE_TIMES = [
-    "7:00 PM", "7:30 PM", "8:00 PM",
-    "8:15 PM", "8:30 PM", "8:45 PM",
-    "9:00 PM", "9:15 PM", "9:30 PM",
-    "9:45 PM", "10:00 PM", "10:15 PM",
-];
-
 const OCCASIONS = ["Birthday", "Engagement", "Anniversary"];
 
-function ReserveTable({ data, onUpdate, onNext }) {
+function ReserveTable({ data, availableTimes = [], onUpdate, onNext }) {
     const availableDates = useMemo(() => {
         const dates = [];
         const today = new Date();
@@ -80,7 +73,7 @@ function ReserveTable({ data, onUpdate, onNext }) {
             <fieldset className="reserve-table__times" aria-label="Available time slots">
                 <legend className="reserve-table__label">Available Times</legend>
                 <div className="reserve-table__times-grid" role="radiogroup">
-                    {AVAILABLE_TIMES.map((time) => (
+                    {availableTimes.map((time) => (
                         <button
                             key={time}
                             type="button"

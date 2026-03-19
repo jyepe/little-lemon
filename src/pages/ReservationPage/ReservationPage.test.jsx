@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import ReservationPage from "./ReservationPage";
+
+const MOCK_TIMES = ["17:00", "17:30", "18:00"];
 
 function renderReservationPage() {
     return render(
@@ -13,6 +15,16 @@ function renderReservationPage() {
 }
 
 describe("ReservationPage", () => {
+    beforeEach(() => {
+        globalThis.fetchAPI = vi.fn(() => MOCK_TIMES);
+        globalThis.submitAPI = vi.fn(() => true);
+    });
+
+    afterEach(() => {
+        delete globalThis.fetchAPI;
+        delete globalThis.submitAPI;
+    });
+
     it("renders step 1 by default with title 'Reserve a table'", () => {
         renderReservationPage();
         expect(
@@ -28,6 +40,27 @@ describe("ReservationPage", () => {
         expect(screen.getByLabelText("Occasion")).toBeInTheDocument();
     });
 
+    it("defaults the date to today", () => {
+        renderReservationPage();
+        const dateSelect = screen.getByLabelText("Date");
+        const todayStr = new Date().toISOString().split("T")[0];
+        expect(dateSelect.value).toBe(todayStr);
+    });
+
+    it("calls fetchAPI on initial render", () => {
+        renderReservationPage();
+        expect(globalThis.fetchAPI).toHaveBeenCalled();
+    });
+
+    it("displays time slots from fetchAPI", () => {
+        renderReservationPage();
+        const timeButtons = screen.getAllByRole("radio");
+        expect(timeButtons).toHaveLength(MOCK_TIMES.length);
+        expect(screen.getByText("17:00")).toBeInTheDocument();
+        expect(screen.getByText("17:30")).toBeInTheDocument();
+        expect(screen.getByText("18:00")).toBeInTheDocument();
+    });
+
     it("has a disabled Continue button initially", () => {
         renderReservationPage();
         const continueBtn = screen.getByRole("button", {
@@ -40,17 +73,12 @@ describe("ReservationPage", () => {
         const user = userEvent.setup();
         renderReservationPage();
 
-        // Fill date
-        const dateSelect = screen.getByLabelText("Date");
-        const dateOptions = dateSelect.querySelectorAll("option");
-        await user.selectOptions(dateSelect, dateOptions[1].value);
-
         // Fill party size
         const partySizeSelect = screen.getByLabelText("Party Size");
         await user.selectOptions(partySizeSelect, "2");
 
         // Select a time
-        const timeBtn = screen.getByText("8:00 PM");
+        const timeBtn = screen.getByText("17:00");
         await user.click(timeBtn);
 
         // Click Continue
@@ -71,11 +99,8 @@ describe("ReservationPage", () => {
         renderReservationPage();
 
         // Navigate to step 2
-        const dateSelect = screen.getByLabelText("Date");
-        const dateOptions = dateSelect.querySelectorAll("option");
-        await user.selectOptions(dateSelect, dateOptions[1].value);
         await user.selectOptions(screen.getByLabelText("Party Size"), "2");
-        await user.click(screen.getByText("8:00 PM"));
+        await user.click(screen.getByText("17:00"));
         await user.click(
             screen.getByRole("button", {
                 name: /Continue to guest details/i,
@@ -94,16 +119,13 @@ describe("ReservationPage", () => {
         ).toBeInTheDocument();
     });
 
-    it("completes the full 3-step flow", async () => {
+    it("completes the full 3-step flow and calls submitAPI", async () => {
         const user = userEvent.setup();
         renderReservationPage();
 
-        // Step 1: Fill reservation details
-        const dateSelect = screen.getByLabelText("Date");
-        const dateOptions = dateSelect.querySelectorAll("option");
-        await user.selectOptions(dateSelect, dateOptions[1].value);
+        // Step 1: Fill reservation details (date is pre-filled to today)
         await user.selectOptions(screen.getByLabelText("Party Size"), "2");
-        await user.click(screen.getByText("8:00 PM"));
+        await user.click(screen.getByText("17:00"));
         await user.click(
             screen.getByRole("button", {
                 name: /Continue to guest details/i,
@@ -123,6 +145,9 @@ describe("ReservationPage", () => {
             name: /Confirm your reservation/i,
         });
         await user.click(submitBtn);
+
+        // submitAPI should have been called
+        expect(globalThis.submitAPI).toHaveBeenCalledOnce();
 
         // Step 3: Confirmation
         expect(

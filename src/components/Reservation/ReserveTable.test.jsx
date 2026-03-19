@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import ReserveTable from "./ReserveTable";
 
+const MOCK_TIMES = ["17:00", "17:30", "18:00"];
+
 const emptyData = {
     date: "",
     partySize: "",
@@ -19,7 +21,7 @@ const filledData = {
     ...emptyData,
     date: "2026-03-20",
     partySize: "2",
-    time: "8:00 PM",
+    time: "17:00",
 };
 
 function renderReserveTable(data = emptyData, overrides = {}) {
@@ -28,6 +30,7 @@ function renderReserveTable(data = emptyData, overrides = {}) {
     render(
         <ReserveTable
             data={data}
+            availableTimes={overrides.availableTimes ?? MOCK_TIMES}
             onUpdate={overrides.onUpdate || onUpdate}
             onNext={overrides.onNext || onNext}
         />
@@ -43,10 +46,10 @@ describe("ReserveTable", () => {
         expect(screen.getByLabelText("Occasion")).toBeInTheDocument();
     });
 
-    it("renders all 12 time slot buttons", () => {
+    it("renders time slot buttons matching availableTimes prop", () => {
         renderReserveTable();
         const timeButtons = screen.getAllByRole("radio");
-        expect(timeButtons).toHaveLength(12);
+        expect(timeButtons).toHaveLength(MOCK_TIMES.length);
     });
 
     it("renders 5 date options plus a placeholder", () => {
@@ -101,9 +104,9 @@ describe("ReserveTable", () => {
     it("calls onUpdate when a time slot is clicked", async () => {
         const user = userEvent.setup();
         const { onUpdate } = renderReserveTable();
-        const timeBtn = screen.getByText("8:00 PM");
+        const timeBtn = screen.getByText("17:00");
         await user.click(timeBtn);
-        expect(onUpdate).toHaveBeenCalledWith({ time: "8:00 PM" });
+        expect(onUpdate).toHaveBeenCalledWith({ time: "17:00" });
     });
 
     it("calls onNext when Continue is clicked with valid data", async () => {
@@ -119,13 +122,19 @@ describe("ReserveTable", () => {
 
     it("marks the selected time slot with aria-checked='true'", () => {
         renderReserveTable(filledData);
-        const selectedBtn = screen.getByText("8:00 PM");
+        const selectedBtn = screen.getByText("17:00");
         expect(selectedBtn).toHaveAttribute("aria-checked", "true");
     });
 
     it("marks unselected time slots with aria-checked='false'", () => {
         renderReserveTable(filledData);
-        const unselectedBtn = screen.getByText("7:00 PM");
+        const unselectedBtn = screen.getByText("17:30");
         expect(unselectedBtn).toHaveAttribute("aria-checked", "false");
+    });
+
+    it("renders no time slots when availableTimes is empty", () => {
+        renderReserveTable(emptyData, { availableTimes: [] });
+        const timeButtons = screen.queryAllByRole("radio");
+        expect(timeButtons).toHaveLength(0);
     });
 });
