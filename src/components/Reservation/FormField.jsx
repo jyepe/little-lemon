@@ -1,12 +1,9 @@
 import "./FormField.css";
 
-function FormField({ id, label, type = "text", value, onChange, required, autoComplete, placeholder, rows }) {
-    const isTextarea = type === "textarea";
-
-    return (
-        <div className="form-field">
-            <label htmlFor={id}>{label}</label>
-            {isTextarea ? (
+function FormField({ id, label, type = "text", value, onChange, required, autoComplete, placeholder, rows, options, hint }) {
+    const renderControl = () => {
+        if (type === "textarea") {
+            return (
                 <textarea
                     id={id}
                     rows={rows}
@@ -14,17 +11,44 @@ function FormField({ id, label, type = "text", value, onChange, required, autoCo
                     onChange={onChange}
                     placeholder={placeholder}
                 />
-            ) : (
-                <input
+            );
+        }
+
+        if (type === "select") {
+            return (
+                <select
                     id={id}
-                    type={type}
                     value={value}
                     onChange={onChange}
-                    required={required}
                     aria-required={required ? "true" : undefined}
-                    autoComplete={autoComplete}
-                />
-            )}
+                >
+                    {options.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                        </option>
+                    ))}
+                </select>
+            );
+        }
+
+        return (
+            <input
+                id={id}
+                type={type}
+                value={value}
+                onChange={onChange}
+                required={required}
+                aria-required={required ? "true" : undefined}
+                autoComplete={autoComplete}
+            />
+        );
+    };
+
+    return (
+        <div className="form-field">
+            <label htmlFor={id}>{label}</label>
+            {renderControl()}
+            {hint && <p className="form-field__hint">{hint}</p>}
         </div>
     );
 }

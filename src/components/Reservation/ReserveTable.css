@@ -3,9 +3,10 @@
     max-width: 480px;
 }
 
-.reserve-table__field {
+.reserve-table .form-field {
     margin-bottom: var(--spacing-md);
 }
+
 
 .reserve-table__label {
     display: block;
@@ -13,30 +14,6 @@
     font-size: var(--font-size-small);
     margin-bottom: var(--spacing-xs);
     color: var(--color-neutral-dark);
-}
-
-.reserve-table__select {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid oklch(0.80 0 0);
-    border-radius: var(--border-radius);
-    background-color: var(--color-white);
-    font-size: var(--font-size-body);
-}
-
-.reserve-table__select:focus {
-    outline: 1.5px solid var(--color-primary-green);
-}
-
-.reserve-table__select:hover {
-    border-color: var(--color-primary-green);
-    cursor: pointer;
-}
-
-.reserve-table__hint {
-    font-size: var(--font-size-small);
-    color: oklch(0.55 0 0);
-    margin-top: var(--spacing-xs);
 }
 
 .reserve-table__times {

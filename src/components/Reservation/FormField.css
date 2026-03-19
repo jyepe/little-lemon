@@ -6,7 +6,8 @@
 }
 
 .form-field input,
-.form-field textarea {
+.form-field textarea,
+.form-field select {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid oklch(0.80 0 0);
@@ -16,11 +17,23 @@
 }
 
 .form-field input:focus,
-.form-field textarea:focus {
+.form-field textarea:focus,
+.form-field select:focus {
     outline: 1.5px solid var(--color-primary-green);
+}
+
+.form-field select:hover {
+    border-color: var(--color-primary-green);
+    cursor: pointer;
 }
 
 .form-field textarea {
     resize: vertical;
     min-height: 100px;
+}
+
+.form-field__hint {
+    font-size: var(--font-size-small);
+    color: oklch(0.55 0 0);
+    margin-top: var(--spacing-xs);
 }
