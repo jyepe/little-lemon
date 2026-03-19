@@ -52,4 +52,9 @@ describe("HomePage", () => {
             })
         ).toBeInTheDocument();
     });
+
+    it("renders the Our Story section", () => {
+        renderHomePage();
+        expect(screen.getByLabelText("Our Story")).toBeInTheDocument();
+    });
 });

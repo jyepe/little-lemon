@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import HomePage from "./pages/HomePage/HomePage";
 import ReservationPage from "./pages/ReservationPage/ReservationPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import { Routes, Route } from "react-router-dom";
 
 function renderApp(initialRoute = "/") {
@@ -18,6 +19,7 @@ function renderApp(initialRoute = "/") {
                         path="/reservations"
                         element={<ReservationPage />}
                     />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </main>
             <Footer />
@@ -61,5 +63,18 @@ describe("App Routing", () => {
             screen.getByRole("navigation", { name: "Main navigation" })
         ).toBeInTheDocument();
         expect(screen.getByRole("contentinfo")).toBeInTheDocument();
+    });
+
+    it("renders NotFoundPage for an unknown route", () => {
+        renderApp("/some/unknown/route");
+        expect(
+            screen.getByRole("heading", { level: 1, name: "404" })
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole("heading", {
+                level: 2,
+                name: /Page Not Found/i,
+            })
+        ).toBeInTheDocument();
     });
 });
