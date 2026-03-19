@@ -1,4 +1,5 @@
 import "./GuestDetails.css";
+import FormField from "./FormField";
 
 function GuestDetails({ data, onUpdate, onNext, onEdit }) {
     const formattedDate = data.date
@@ -44,70 +45,53 @@ function GuestDetails({ data, onUpdate, onNext, onEdit }) {
                 onSubmit={handleSubmit}
                 aria-label="Guest details form"
             >
-                <div className="guest-details__field">
-                    <label htmlFor="firstName">First Name *</label>
-                    <input
-                        id="firstName"
-                        type="text"
-                        value={data.firstName}
-                        onChange={(e) => onUpdate({ firstName: e.target.value })}
-                        required
-                        aria-required="true"
-                        autoComplete="given-name"
-                    />
-                </div>
+                <FormField
+                    id="firstName"
+                    label="First Name *"
+                    value={data.firstName}
+                    onChange={(e) => onUpdate({ firstName: e.target.value })}
+                    required
+                    autoComplete="given-name"
+                />
 
-                <div className="guest-details__field">
-                    <label htmlFor="lastName">Last Name *</label>
-                    <input
-                        id="lastName"
-                        type="text"
-                        value={data.lastName}
-                        onChange={(e) => onUpdate({ lastName: e.target.value })}
-                        required
-                        aria-required="true"
-                        autoComplete="family-name"
-                    />
-                </div>
+                <FormField
+                    id="lastName"
+                    label="Last Name *"
+                    value={data.lastName}
+                    onChange={(e) => onUpdate({ lastName: e.target.value })}
+                    required
+                    autoComplete="family-name"
+                />
 
-                <div className="guest-details__field">
-                    <label htmlFor="email">Email Address *</label>
-                    <input
-                        id="email"
-                        type="email"
-                        value={data.email}
-                        onChange={(e) => onUpdate({ email: e.target.value })}
-                        required
-                        aria-required="true"
-                        autoComplete="email"
-                    />
-                </div>
+                <FormField
+                    id="email"
+                    label="Email Address *"
+                    type="email"
+                    value={data.email}
+                    onChange={(e) => onUpdate({ email: e.target.value })}
+                    required
+                    autoComplete="email"
+                />
 
-                <div className="guest-details__field">
-                    <label htmlFor="phone">Phone Number *</label>
-                    <input
-                        id="phone"
-                        type="tel"
-                        value={data.phone}
-                        onChange={(e) => onUpdate({ phone: e.target.value })}
-                        required
-                        aria-required="true"
-                        autoComplete="tel"
-                    />
-                </div>
+                <FormField
+                    id="phone"
+                    label="Phone Number *"
+                    type="tel"
+                    value={data.phone}
+                    onChange={(e) => onUpdate({ phone: e.target.value })}
+                    required
+                    autoComplete="tel"
+                />
 
-                <div className="guest-details__field">
-                    <label htmlFor="special">Special Instructions (Optional)</label>
-                    <textarea
-                        id="special"
-                        rows="4"
-                        value={data.specialInstructions}
-                        onChange={(e) =>
-                            onUpdate({ specialInstructions: e.target.value })
-                        }
-                        placeholder="Any dietary restrictions, special requests, etc."
-                    />
-                </div>
+                <FormField
+                    id="special"
+                    label="Special Instructions (Optional)"
+                    type="textarea"
+                    rows="4"
+                    value={data.specialInstructions}
+                    onChange={(e) => onUpdate({ specialInstructions: e.target.value })}
+                    placeholder="Any dietary restrictions, special requests, etc."
+                />
 
                 <button
                     type="submit"
@@ -123,3 +107,4 @@ function GuestDetails({ data, onUpdate, onNext, onEdit }) {
 }
 
 export default GuestDetails;
+

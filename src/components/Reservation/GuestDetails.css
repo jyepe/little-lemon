@@ -44,33 +44,7 @@
     gap: var(--spacing-md);
 }
 
-.guest-details__field label {
-    display: block;
-    font-weight: 700;
-    font-size: var(--font-size-small);
-    margin-bottom: var(--spacing-xs);
-}
 
-.guest-details__field input,
-.guest-details__field textarea {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid oklch(0.80 0 0);
-    border-radius: var(--border-radius);
-    background-color: var(--color-white);
-    font-size: var(--font-size-body);
-}
-
-.guest-details__field input:focus,
-.guest-details__field textarea:focus {
-    outline: 2px solid var(--color-primary-green);
-    outline-offset: 2px;
-}
-
-.guest-details__field textarea {
-    resize: vertical;
-    min-height: 100px;
-}
 
 .guest-details__submit {
     width: 100%;
