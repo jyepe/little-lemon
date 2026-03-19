@@ -180,4 +180,64 @@ describe("GuestDetails", () => {
         await user.click(submitBtn);
         expect(onNext).not.toHaveBeenCalled();
     });
+    it("shows error message when email is missing TLD", () => {
+        const invalidEmailData = { ...filledData, email: "mario@example" };
+        renderGuestDetails(invalidEmailData);
+        expect(
+            screen.getByText("Please enter a valid email address")
+        ).toBeInTheDocument();
+    });
+
+    it("shows error message when email is missing @ symbol", () => {
+        const invalidEmailData = { ...filledData, email: "marioexample.com" };
+        renderGuestDetails(invalidEmailData);
+        expect(
+            screen.getByText("Please enter a valid email address")
+        ).toBeInTheDocument();
+    });
+
+    it("shows error message when TLD is only 1 character", () => {
+        const invalidEmailData = { ...filledData, email: "mario@example.c" };
+        renderGuestDetails(invalidEmailData);
+        expect(
+            screen.getByText("Please enter a valid email address")
+        ).toBeInTheDocument();
+    });
+
+    it("does not show error for valid email with .me TLD", () => {
+        const validEmailData = { ...filledData, email: "mario@proton.me" };
+        renderGuestDetails(validEmailData);
+        expect(
+            screen.queryByText("Please enter a valid email address")
+        ).not.toBeInTheDocument();
+    });
+
+    it("does not show error for valid email with .uk TLD", () => {
+        const validEmailData = { ...filledData, email: "mario@example.co.uk" };
+        renderGuestDetails(validEmailData);
+        expect(
+            screen.queryByText("Please enter a valid email address")
+        ).not.toBeInTheDocument();
+    });
+
+    it("disables submit button when email is invalid", () => {
+        const invalidEmailData = { ...filledData, email: "mario@example" };
+        renderGuestDetails(invalidEmailData);
+        const submitBtn = screen.getByRole("button", {
+            name: /Confirm your reservation/i,
+        });
+        expect(submitBtn).toBeDisabled();
+    });
+
+    it("does not call onNext when email is invalid", async () => {
+        const user = userEvent.setup();
+        const onNext = vi.fn();
+        const invalidEmailData = { ...filledData, email: "mario@example" };
+        renderGuestDetails(invalidEmailData, { onNext });
+        const submitBtn = screen.getByRole("button", {
+            name: /Confirm your reservation/i,
+        });
+        await user.click(submitBtn);
+        expect(onNext).not.toHaveBeenCalled();
+    });
 });

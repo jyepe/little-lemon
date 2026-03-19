@@ -13,12 +13,15 @@ function GuestDetails({ data, onUpdate, onNext, onEdit }) {
   const isFormValid =
     data.firstName && data.lastName && data.email && data.phone;
 
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email);
+  const showEmailError = data.email && !isEmailValid;
+
   const isPhoneValid = /^\d{10}$/.test(data.phone);
   const showPhoneError = data.phone && !isPhoneValid;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isFormValid && isPhoneValid) {
+    if (isFormValid && isEmailValid && isPhoneValid) {
       onNext();
     }
   };
@@ -76,6 +79,7 @@ function GuestDetails({ data, onUpdate, onNext, onEdit }) {
           onChange={(e) => onUpdate({ email: e.target.value })}
           required
           autoComplete="email"
+          error={showEmailError ? "Please enter a valid email address" : undefined}
         />
 
         <FormField
@@ -102,7 +106,7 @@ function GuestDetails({ data, onUpdate, onNext, onEdit }) {
         <button
           type="submit"
           className="guest-details__submit"
-          disabled={!isFormValid || !isPhoneValid}
+          disabled={!isFormValid || !isEmailValid || !isPhoneValid}
           aria-label="Confirm your reservation"
         >
           Confirm Reservation
