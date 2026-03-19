@@ -1,6 +1,7 @@
 import "./FormField.css";
 
-function FormField({ id, label, type = "text", value, onChange, required, autoComplete, placeholder, rows, options, hint }) {
+function FormField({ id, label, type = "text", value, onChange, required, autoComplete, placeholder, rows, options, hint, error }) {
+    const errorId = `${id}-error`;
     const renderControl = () => {
         if (type === "textarea") {
             return (
@@ -39,16 +40,19 @@ function FormField({ id, label, type = "text", value, onChange, required, autoCo
                 onChange={onChange}
                 required={required}
                 aria-required={required ? "true" : undefined}
+                aria-invalid={error ? "true" : undefined}
+                aria-describedby={error ? errorId : undefined}
                 autoComplete={autoComplete}
             />
         );
     };
 
     return (
-        <div className="form-field">
+        <div className={`form-field${error ? " form-field--error" : ""}`}>
             <label htmlFor={id}>{label}</label>
             {renderControl()}
-            {hint && <p className="form-field__hint">{hint}</p>}
+            {error && <p className="form-field__error" id={errorId} role="alert">{error}</p>}
+            {hint && !error && <p className="form-field__hint">{hint}</p>}
         </div>
     );
 }

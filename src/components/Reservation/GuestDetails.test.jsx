@@ -137,4 +137,47 @@ describe("GuestDetails", () => {
         });
         expect(form).toBeInTheDocument();
     });
+
+    it("shows error message when phone number is invalid", () => {
+        const invalidPhoneData = { ...filledData, phone: "123" };
+        renderGuestDetails(invalidPhoneData);
+        expect(
+            screen.getByText("Please enter a valid 10-digit phone number")
+        ).toBeInTheDocument();
+    });
+
+    it("does not show error message for a valid 10-digit phone", () => {
+        renderGuestDetails(filledData);
+        expect(
+            screen.queryByText("Please enter a valid 10-digit phone number")
+        ).not.toBeInTheDocument();
+    });
+
+    it("does not show error when phone field is empty", () => {
+        renderGuestDetails(baseData);
+        expect(
+            screen.queryByText("Please enter a valid 10-digit phone number")
+        ).not.toBeInTheDocument();
+    });
+
+    it("disables submit button when phone is invalid", () => {
+        const invalidPhoneData = { ...filledData, phone: "123" };
+        renderGuestDetails(invalidPhoneData);
+        const submitBtn = screen.getByRole("button", {
+            name: /Confirm your reservation/i,
+        });
+        expect(submitBtn).toBeDisabled();
+    });
+
+    it("does not call onNext when phone is invalid", async () => {
+        const user = userEvent.setup();
+        const onNext = vi.fn();
+        const invalidPhoneData = { ...filledData, phone: "12345" };
+        renderGuestDetails(invalidPhoneData, { onNext });
+        const submitBtn = screen.getByRole("button", {
+            name: /Confirm your reservation/i,
+        });
+        await user.click(submitBtn);
+        expect(onNext).not.toHaveBeenCalled();
+    });
 });

@@ -37,3 +37,15 @@
     color: oklch(0.55 0 0);
     margin-top: var(--spacing-xs);
 }
+
+.form-field--error input,
+.form-field--error textarea,
+.form-field--error select {
+    border-color: oklch(0.55 0.25 25);
+}
+
+.form-field__error {
+    font-size: var(--font-size-small);
+    color: oklch(0.55 0.25 25);
+    margin-top: var(--spacing-xs);
+}
