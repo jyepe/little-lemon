@@ -42,4 +42,14 @@ describe("HomePage", () => {
         expect(screen.getByText("Bruschetta")).toBeInTheDocument();
         expect(screen.getByText("Lemon Dessert")).toBeInTheDocument();
     });
+
+    it("renders the Testimonials section", () => {
+        renderHomePage();
+        expect(
+            screen.getByRole("heading", {
+                level: 2,
+                name: /testimonials/i,
+            })
+        ).toBeInTheDocument();
+    });
 });
