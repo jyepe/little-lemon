@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReserveTable from "../../components/Reservation/ReserveTable";
 import GuestDetails from "../../components/Reservation/GuestDetails";
@@ -9,8 +9,6 @@ const todayStr = new Date().toISOString().split("T")[0];
 
 function getAvailableTimes(dateStr) {
   try {
-    // fetchAPI is a global from the external api.js script (declared with const,
-    // so it lives in global scope but is NOT a property of window)
     // eslint-disable-next-line no-undef
     return fetchAPI(new Date(dateStr + "T00:00:00"));
   } catch {
@@ -19,8 +17,6 @@ function getAvailableTimes(dateStr) {
 }
 
 function ReservationPage() {
-  const [availableTimes, setAvailableTimes] = useState([]);
-
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [reservationData, setReservationData] = useState({
@@ -35,9 +31,7 @@ function ReservationPage() {
     specialInstructions: "",
   });
 
-  useEffect(() => {
-    setAvailableTimes(getAvailableTimes(reservationData.date));
-  }, [reservationData.date]);
+  const availableTimes = getAvailableTimes(reservationData.date);
 
   const stepTitles = {
     1: "Reserve a table",
@@ -68,7 +62,6 @@ function ReservationPage() {
   const handleUpdateData = (updates) => {
     if ("date" in updates) {
       updates.time = "";
-      setAvailableTimes(getAvailableTimes(updates.date));
     }
     setReservationData((prev) => ({ ...prev, ...updates }));
   };
