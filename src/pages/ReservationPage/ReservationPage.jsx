@@ -7,10 +7,17 @@ import "./ReservationPage.css";
 
 const todayStr = new Date().toISOString().split("T")[0];
 
+function to12Hour(time24) {
+  const [h, m] = time24.split(":").map(Number);
+  const period = h >= 12 ? "PM" : "AM";
+  const hour12 = h % 12 || 12;
+  return `${hour12}:${m.toString().padStart(2, "0")} ${period}`;
+}
+
 function getAvailableTimes(dateStr) {
   try {
     // eslint-disable-next-line no-undef
-    return fetchAPI(new Date(dateStr + "T00:00:00"));
+    return fetchAPI(new Date(dateStr + "T00:00:00")).map(to12Hour);
   } catch {
     return [];
   }
