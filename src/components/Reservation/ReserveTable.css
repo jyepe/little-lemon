@@ -1,0 +1,97 @@
+.reserve-table {
+    padding-block: var(--spacing-lg);
+    max-width: 480px;
+}
+
+.reserve-table__field {
+    margin-bottom: var(--spacing-md);
+}
+
+.reserve-table__label {
+    display: block;
+    font-weight: 700;
+    font-size: var(--font-size-small);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-neutral-dark);
+}
+
+.reserve-table__select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid oklch(0.80 0 0);
+    border-radius: var(--border-radius);
+    background-color: var(--color-white);
+    font-size: var(--font-size-body);
+    appearance: auto;
+}
+
+.reserve-table__select:focus {
+    outline: 2px solid var(--color-primary-green);
+    outline-offset: 2px;
+}
+
+.reserve-table__hint {
+    font-size: var(--font-size-small);
+    color: oklch(0.55 0 0);
+    margin-top: var(--spacing-xs);
+}
+
+.reserve-table__times {
+    border: none;
+    margin-bottom: var(--spacing-lg);
+}
+
+.reserve-table__times-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xs);
+}
+
+.reserve-table__time-btn {
+    padding: 0.625rem 0.5rem;
+    border: 1px solid oklch(0.80 0 0);
+    border-radius: var(--border-radius);
+    background-color: var(--color-white);
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.reserve-table__time-btn:hover {
+    border-color: var(--color-primary-green);
+    color: var(--color-primary-green);
+}
+
+.reserve-table__time-btn:focus-visible {
+    outline: 2px solid var(--color-primary-green);
+    outline-offset: 2px;
+}
+
+.reserve-table__time-btn--selected {
+    background-color: var(--color-primary-green);
+    color: var(--color-white);
+    border-color: var(--color-primary-green);
+}
+
+.reserve-table__continue {
+    width: 100%;
+    padding: 0.875rem;
+    background-color: var(--color-primary-yellow);
+    color: var(--color-neutral-dark);
+    font-weight: 700;
+    font-size: var(--font-size-body);
+    border: none;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.reserve-table__continue:hover:not(:disabled) {
+    background-color: oklch(0.82 0.17 93);
+}
+
+.reserve-table__continue:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

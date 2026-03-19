@@ -1,0 +1,95 @@
+.guest-details {
+    padding-block: var(--spacing-lg);
+    max-width: 480px;
+}
+
+.guest-details__summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    border: 1px solid oklch(0.80 0 0);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+}
+
+.guest-details__summary-date {
+    font-weight: 700;
+    font-size: var(--font-size-body);
+}
+
+.guest-details__summary-party {
+    font-size: var(--font-size-small);
+    color: oklch(0.55 0 0);
+    margin-top: 0.25rem;
+}
+
+.guest-details__edit {
+    background: none;
+    border: none;
+    font-weight: 700;
+    font-size: var(--font-size-small);
+    color: var(--color-neutral-dark);
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.guest-details__edit:hover {
+    color: var(--color-primary-green);
+}
+
+.guest-details__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.guest-details__field label {
+    display: block;
+    font-weight: 700;
+    font-size: var(--font-size-small);
+    margin-bottom: var(--spacing-xs);
+}
+
+.guest-details__field input,
+.guest-details__field textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid oklch(0.80 0 0);
+    border-radius: var(--border-radius);
+    background-color: var(--color-white);
+    font-size: var(--font-size-body);
+}
+
+.guest-details__field input:focus,
+.guest-details__field textarea:focus {
+    outline: 2px solid var(--color-primary-green);
+    outline-offset: 2px;
+}
+
+.guest-details__field textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.guest-details__submit {
+    width: 100%;
+    padding: 0.875rem;
+    background-color: var(--color-primary-yellow);
+    color: var(--color-neutral-dark);
+    font-weight: 700;
+    font-size: var(--font-size-body);
+    border: none;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    margin-top: var(--spacing-sm);
+}
+
+.guest-details__submit:hover:not(:disabled) {
+    background-color: oklch(0.82 0.17 93);
+}
+
+.guest-details__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

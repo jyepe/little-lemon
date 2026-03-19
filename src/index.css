@@ -10,6 +10,28 @@
     /* Neutral */
     --color-neutral-light: oklch(0.95 0.003 106);
     --color-neutral-dark: oklch(0.30 0.00 0);
+    --color-white: oklch(1 0 0);
+
+    /* Typography */
+    --font-display: "Markazi Text", serif;
+    --font-body: "Karla", sans-serif;
+
+    --font-size-display: 4rem;
+    --font-size-subtitle: 2.5rem;
+    --font-size-lead: 1.125rem;
+    --font-size-section-title: 2.5rem;
+    --font-size-card-title: 1.125rem;
+    --font-size-body: 1rem;
+    --font-size-small: 0.875rem;
+
+    /* Layout */
+    --max-width: 960px;
+    --border-radius: 16px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
 }
 
 /* ========================
@@ -32,6 +54,9 @@ body {
     min-height: 100vh;
     min-height: 100dvh;
     line-height: 1.5;
+    font-family: var(--font-body);
+    color: var(--color-neutral-dark);
+    background-color: var(--color-white);
 }
 
 img,
@@ -77,4 +102,15 @@ h6 {
 p {
     overflow-wrap: break-word;
     text-wrap: pretty;
+}
+
+/* ========================
+   Utilities
+   ======================== */
+
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--spacing-md);
 }

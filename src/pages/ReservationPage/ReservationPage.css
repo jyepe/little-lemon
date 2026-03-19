@@ -1,0 +1,42 @@
+.reservation-page {
+    min-height: 80vh;
+}
+
+.reservation-page__header {
+    background-color: var(--color-primary-green);
+    color: var(--color-white);
+    padding-block: var(--spacing-md);
+}
+
+.reservation-page__header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.reservation-page__back {
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.5rem;
+    padding: var(--spacing-xs);
+    line-height: 1;
+    transition: opacity 0.2s ease;
+}
+
+.reservation-page__back:hover {
+    opacity: 0.8;
+}
+
+.reservation-page__title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-subtitle);
+    font-weight: 500;
+}
+
+.reservation-page__subtitle {
+    font-size: var(--font-size-small);
+    opacity: 0.85;
+    margin-top: var(--spacing-xs);
+    color: var(--color-white);
+}
