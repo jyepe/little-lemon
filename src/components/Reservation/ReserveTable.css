@@ -22,12 +22,15 @@
     border-radius: var(--border-radius);
     background-color: var(--color-white);
     font-size: var(--font-size-body);
-    appearance: auto;
 }
 
 .reserve-table__select:focus {
-    outline: 2px solid var(--color-primary-green);
-    outline-offset: 2px;
+    outline: 1.5px solid var(--color-primary-green);
+}
+
+.reserve-table__select:hover {
+    border-color: var(--color-primary-green);
+    cursor: pointer;
 }
 
 .reserve-table__hint {
@@ -55,7 +58,7 @@
     background-color: var(--color-white);
     font-size: var(--font-size-small);
     font-weight: 500;
-    transition: all 0.15s ease;
+    transition: all 0.5s ease;
     text-align: center;
 }
 
@@ -73,6 +76,10 @@
     background-color: var(--color-primary-green);
     color: var(--color-white);
     border-color: var(--color-primary-green);
+
+    &:hover {
+        color: var(--color-white);
+    }
 }
 
 .reserve-table__continue {
